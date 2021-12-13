@@ -100,7 +100,7 @@ public class AjoutArticleActivity extends AppCompatActivity {
         intent.putExtra("categorie", categorie);
         intent.putExtra("description", nombreUnites + " x " + description);
         intent.putExtra("tarif", tarifTotal);
-        setResult(0, intent);
+        setResult(RESULT_OK, intent);
         finish();
     }
 
