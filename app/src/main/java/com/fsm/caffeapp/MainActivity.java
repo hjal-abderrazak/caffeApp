@@ -7,6 +7,7 @@ import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -35,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
         readData();
         arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, arrayList);
         lvCommande.setAdapter(arrayAdapter);
+
+
         insertAllArticle();
 
         lvCommande.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -84,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("WrongConstant")
     public  void createDb(){
         sqlDb = openOrCreateDatabase("mydatabase.db", SQLiteDatabase.OPEN_READWRITE, null);
-        sqlDb.execSQL("CREATE TABLE IF NOT EXISTS article (id INTEGER "
+        sqlDb.execSQL("CREATE TABLE IF NOT EXISTS articles (id INTEGER "
                 + " PRIMARY KEY AUTOINCREMENT, categorie VARCHAR, description VARCHAR"
                 + ", tarif INTEGER);");
         sqlDb.execSQL("CREATE TABLE IF NOT EXISTS commandes (id INTEGER "
@@ -94,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void insertAllArticle(){
+        if (!isEmpty("articles")){
         insert("cafe","café",1500);
         insert("cafe","cappucin",2500);
         insert("the","thé",1000);
@@ -103,6 +107,16 @@ public class MainActivity extends AppCompatActivity {
         insert("soda","fanta",1800);
         insert("eau","eau 1/2 litre",1500);
         insert("eau","eau 1.5 litre",2500);
+        }
+    }
+
+    public boolean isEmpty(String TableName){
+        long NoOfRows = DatabaseUtils.queryNumEntries(sqlDb,TableName);
+        if (NoOfRows == 0){
+            return true;
+        } else {
+            return false;
+        }
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
