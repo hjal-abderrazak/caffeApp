@@ -18,6 +18,11 @@ class Article {
         this.tarif = tarif;
 
     }
+    public Article(String description, String categorie, int  tarif) {
+        this.description = description;
+        this.tarif = tarif;
+        this.categorie=categorie;
+    }
 
     public String getCategorie() {
         return categorie;
