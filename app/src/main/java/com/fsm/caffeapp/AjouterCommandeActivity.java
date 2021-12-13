@@ -128,7 +128,7 @@ public class AjouterCommandeActivity extends AppCompatActivity {
 
     public void readData(){
         arrayListArticle.clear();
-        Cursor resultSet = sqlDb.rawQuery("SELECT * FROM article", null);
+        Cursor resultSet = sqlDb.rawQuery("SELECT * FROM articles", null);
         if (resultSet.moveToFirst()) {
             do {
                 String id = resultSet.getString(0);

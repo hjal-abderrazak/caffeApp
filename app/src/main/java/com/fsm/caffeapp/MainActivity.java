@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         values.put("categorie", categorie);
         values.put("description", desc);
         values.put("tarif", tarif);
-        long id = sqlDb.insert("article", null, values);
+        long id = sqlDb.insert("articles", null, values);
         if (id == -1) {
             Toast.makeText(this, "Erreur d'insertion dans la base"
                     , Toast.LENGTH_SHORT).show();
@@ -94,10 +94,8 @@ public class MainActivity extends AppCompatActivity {
                 + " PRIMARY KEY AUTOINCREMENT, description VARCHAR);");
     }
 
-
-
     public void insertAllArticle(){
-        if (!isEmpty("articles")){
+        if (isEmpty("articles")){
         insert("cafe","café",1500);
         insert("cafe","cappucin",2500);
         insert("the","thé",1000);
@@ -126,7 +124,6 @@ public class MainActivity extends AppCompatActivity {
             arrayList.clear();
                 readData();
                 arrayAdapter.notifyDataSetChanged();
-
             }
         }
     }
