@@ -169,7 +169,7 @@ public class AjouterCommandeActivity extends AppCompatActivity {
         String desc = "";
         int monatantTotal = 0;
         for (int i = 0; i < arrayListCommandes.size(); i++) {
-            desc = desc + arrayListCommandes.get(i).description + " \n";
+            desc = desc + arrayListCommandes.get(i).description +" : "+arrayListCommandes.get(i).tarif + " \n";
             monatantTotal += arrayListCommandes.get(i).tarif;
 
         }
