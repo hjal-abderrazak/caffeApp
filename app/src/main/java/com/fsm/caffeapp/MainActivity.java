@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     SQLiteDatabase sqlDb;
      static  int a =0;
     ListView lvCommande;
-    ArrayList<Integer> arrayList;
+    ArrayList<String> arrayList;
     Cursor resultSet;
     ArrayAdapter arrayAdapter;
     @SuppressLint("WrongConstant")
@@ -75,8 +75,8 @@ public class MainActivity extends AppCompatActivity {
 
         if (resultSet.moveToFirst()) {
             do {
-                int id = Integer.parseInt(resultSet.getString(0));
-                arrayList.add( id);
+                String desc  = resultSet.getString(1);
+                arrayList.add(desc);
 
             } while (resultSet.moveToNext());
         }
