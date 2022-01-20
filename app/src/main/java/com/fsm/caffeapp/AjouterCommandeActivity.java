@@ -76,6 +76,21 @@ public class AjouterCommandeActivity extends AppCompatActivity {
             }
         });
 
+        listCommande.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(getApplicationContext(),"supprimer avec succes",Toast.LENGTH_LONG).show();
+                arrayListCommandes.remove(i);
+                synchronized(commandeAdapter){
+                    commandeAdapter.notify();
+                }
+                listCommande.setAdapter(commandeAdapter);
+
+
+                return true;
+            }
+        });
+
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

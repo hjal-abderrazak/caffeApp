@@ -1,8 +1,5 @@
 package com.fsm.caffeapp;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -10,11 +7,19 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.widget.Toolbar;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 
@@ -22,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     SQLiteDatabase sqlDb;
      static  int a =0;
     ListView lvCommande;
-    ArrayList<String> arrayList;
+    ArrayList<Integer> arrayList;
     Cursor resultSet;
     ArrayAdapter arrayAdapter;
     @SuppressLint("WrongConstant")
@@ -49,7 +54,49 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        // NAVIGATION ********************
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem item) {
+                        item.setChecked(true);
+                        int id = item.getItemId();
+
+                        if (id == R.id.nav_commande) {
+                        Intent intent = new Intent(getApplicationContext(),AjouterCommandeActivity.class);
+                        startActivity(intent);
+                        } else if (id == R.id.nav_quitter) {
+                            finish();
+                            System.exit(0);
+                        } else if (id == R.id.nav_tarif) {
+                            Intent intent = new Intent(getApplicationContext(),TarifActivity.class);
+                            startActivity(intent);
+                        }
+                        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+                        drawer.closeDrawer(GravityCompat.START);
+
+                        //true to display the item as selected
+                        return false;
+                    }
+                });
+
+
+
     }
+
+
 
 
     public void nvCommandes(View view) {
@@ -75,8 +122,8 @@ public class MainActivity extends AppCompatActivity {
 
         if (resultSet.moveToFirst()) {
             do {
-                String desc  = resultSet.getString(1);
-                arrayList.add(desc);
+                int id  = Integer.parseInt(resultSet.getString(0)) ;
+                arrayList.add(id);
 
             } while (resultSet.moveToNext());
         }
@@ -128,4 +175,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void tarifActivity(View view) {
+        Intent intent =new Intent(MainActivity.this,TarifActivity.class);
+        startActivity(intent);
+    }
 }
